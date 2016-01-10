@@ -29,5 +29,9 @@
   "bugs": {
     "url": "https://github.com/bloc/bloc-frontend-project-starter/issues"
   },
-  "homepage": "https://github.com/bloc/bloc-frontend-project-starter#readme"
+  "homepage": "https://github.com/bloc/bloc-frontend-project-starter#readme",
+  "keywords": [
+    "bloc",
+    "jams"
+  ]
 }
