@@ -1,9 +1,14 @@
-var albumPicasso = {
+// This is a service that uses the factory recipe.
+(function() {
+    function Fixtures() {
+        var Fixtures = {};
+        
+        var albumPicasso = {
     name: 'The Colors',
     artist: 'Pablo Picasso',
     label: 'Cubism',
     year: '1881',
-    albumArtURL: 'assets/images/album_covers/01.png',
+    albumArtURL: '/assets/images/album_covers/01.png',
     songs:[
         {name: 'Blue', length: 161.71, audioUrl: 'assets/music/blue'},
         {name: 'Green', length: 103.96, audioUrl: 'assets/music/green'},
@@ -20,7 +25,7 @@ var albumMarconi = {
     artist: 'Guglielmo Marconi',
     label: 'EM',
     year: '1909',
-    albumArtURL: 'assets/images/album_covers/20.png',
+    albumArtURL: '/assets/images/album_covers/20.png',
     songs: [
         {name: 'Hello, Operator?', length: '1:01'},
         { name: 'Ring, ring, ring', length: '5:01' },
@@ -31,3 +36,18 @@ var albumMarconi = {
     ]
     
 };
+        
+        Fixtures.getAlbum = function() {
+            return albumPicasso;
+            
+        };
+        
+        return Fixtures;
+    }
+    
+    angular
+        .module('blocJams')
+        .factory('Fixtures', Fixtures);
+    
+    
+})();
