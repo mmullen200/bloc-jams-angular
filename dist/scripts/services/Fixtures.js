@@ -42,6 +42,17 @@ var albumMarconi = {
             
         };
         
+        Fixtures.getCollection = function(numberOfAlbums) {
+            // Use var, otherwise Javascript will create a global variable
+            var albums = [];
+            
+            for (var i=0; i < numberOfAlbums; i++) {
+                albums.push(angular.copy(albumPicasso));
+            }
+            
+            return albums;
+        };
+        
         return Fixtures;
     }
     
