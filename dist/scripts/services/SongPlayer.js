@@ -3,6 +3,11 @@
         // We create a variable and set an empty object. The service returns this object, making its properties and methods public to the rest of the application.
         var SongPlayer = {};
         
+        
+        /**
+        * @desc The currently playing song
+        * @type {Object}
+        */
         var currentSong = null;
         
         /**
@@ -31,13 +36,23 @@
             currentSong = song;
         };
         
+        
+        /**
+        * @function playSong
+        * @desc Plays a new song when the user clicks the play buttom.
+        * @param {Object} song
+        */
+        var playSong = function(song) {
+            currentBuzzObject.play();
+            song.playing = true;
+        };
+        
         SongPlayer.play = function(song) {
             if (currentSong !== song) {
                 
             setSong(song);
             
-            currentBuzzObject.play();
-            song.playing = true;
+            playSong(song);
                 
             } else if (currentSong === song) {
                 if (currentBuzzObject.isPaused()) {
