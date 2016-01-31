@@ -42,6 +42,11 @@
             song.playing = true;
         };
         
+        var stopSong = function(song) {
+            currentBuzzObject.stop();
+            song.playing = false;
+        };
+        
         // This function will get the index of a song
         var getSongIndex = function(song) {
           return currentAlbum.songs.indexOf(song);  
@@ -57,22 +62,26 @@
         SongPlayer.play = function(song) {
             /* We use || to tell the function: assign (1) the value of song or (2) the value of SongPlayer.currentSong to the song variable. The first condition occurs when we call the methods from the Album view's song rows, and the second condition occurs when we call the methods from the player bar. */
             song = song || SongPlayer.currentSong;
+            
+            if (song === undefined && song === null) {
+                return;
+            }
+            
             if (SongPlayer.currentSong !== song) {
                 
-            setSong(song);
-            
-            playSong(song);
+                setSong(song);
+                playSong(song);
                 
             } else if (SongPlayer.currentSong === song) {
                 if (currentBuzzObject.isPaused()) {
-                    currentBuzzObject.play();
+                    playSong(song);
                 }
             }
         };
         
         SongPlayer.pause = function(song) {
             song = song || SongPlayer.currentSong;
-          currentBuzzObject.pause();
+            currentBuzzObject.pause();
             song.playing = false;
         };
         
@@ -88,6 +97,22 @@
                 setSong(song);
                 playSong(song);
             }
+        };
+        
+        SongPlayer.next = function() {
+            var currentSongIndex = getSongIndex(SongPlayer.currentSong);
+            currentSongIndex++;
+            
+            // To test this, I've chosen the current number of songs: 5. Not sure what .length I should be testing here.
+            if (currentSongIndex >= currentAlbum.songs.length) {
+                currentBuzzObject.stop();
+                SongPlayer.currentSong.playing = null;
+            } else {
+                var song = currentAlbum.songs[currentSongIndex];
+                setSong(song);
+                playSong(song);
+            }
+            
         };
         
         return SongPlayer;
