@@ -4,6 +4,7 @@
         var SongPlayer = {};
         // private attribute stores album information
         var currentAlbum = Fixtures.getAlbum();
+        SongPlayer.currentAlbum = currentAlbum;
         
         /**
         * @desc Buzz object audio file
