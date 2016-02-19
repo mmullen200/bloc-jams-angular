@@ -18,7 +18,10 @@
             replace: true,
             /* Restricts the directive to a specific declaration style: elements */
             restrict: 'E',
-            scope: { },
+            // The & is a type of directive scope binding. There are three types: @, =, &. The & binding provides a way to execute an expression in the context of the parent scope.
+            scope: {
+                onChange: '&'
+            },
             link: function(scope, element, attributes) {
                 
                 // scope.value holds the value of the seek bar, such as the currently playing song time or the current volume. Default value is 0.
@@ -27,6 +30,14 @@
                 scope.max = 100;
                 
                 var seekBar = $(element);
+                
+                attributes.$observe('value', function(newValue){
+                    scope.value = newValue;
+                });
+                
+                attributes.$observe('max', function(newValue){
+                   scope.max = newValue; 
+                });
                 
                 // percentString() is a function that calculates a percent based on the value and maximum value of a seek bar.
                 var percentString = function () {
@@ -49,6 +60,7 @@
                 scope.onClickSeekBar = function(event) {
                     var percent = calculatePercent(seekBar, event);
                     scope.value = percent * scope.max;
+                    notifyOnChange(scope.value);
                 };
                 
                 scope.trackThumb = function() {
@@ -56,6 +68,7 @@
                        var percent = calculatePercent(seekBar, event);
                         scope.$apply(function() {
                         scope.value = percent * scope.max;
+                        notifyOnChange(scope.value);
                         });
                     });
                     
@@ -64,6 +77,13 @@
                         $document.unbind('mouseup.thumb');
                     });
                 };
+                
+                var notifyOnChange = function(newValue) {
+                    if (typeof scope.onChange === 'function') {
+                        scope.onChange({value: newValue});
+                    }
+                };
+                
             }
         };
     }
