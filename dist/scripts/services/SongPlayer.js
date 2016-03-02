@@ -6,6 +6,8 @@
         var currentAlbum = Fixtures.getAlbum();
         SongPlayer.currentAlbum = currentAlbum;
         
+        SongPlayer.volume = 60;
+        
         /**
         * @desc Buzz object audio file
         * @type {Object}
@@ -32,7 +34,7 @@
             // timeupdate is an HTML5 audio eventwe can use with Buzz's bind() method
             // The bind() method adds an event listener to the Buzz sound object. It's listening for a timeupdate event.
             currentBuzzObject.bind('timeupdate', function() {
-                $rootscope.$apply(function() {
+                $rootScope.$apply(function() {
                    SongPlayer.currentTime = currentBuzzObject.getTime(); 
                 });
             });
@@ -138,6 +140,13 @@
         SongPlayer.setCurrentTime = function(time) {
             if (currentBuzzObject) {
                 currentBuzzObject.setTime(time);
+            }
+        };
+        
+        SongPlayer.setVolume = function(volume){
+            SongPlayer.volume = volume;
+            if (currentBuzzObject) {
+                currentBuzzObject.setVolume(volume);
             }
         };
         
